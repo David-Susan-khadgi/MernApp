@@ -1,52 +1,36 @@
 import React, {Component} from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import uuid from "uuid"; 
-// TODO uuid is not working so need to update it later on
 import { connect } from 'react-redux';
-import { getItems } from '../actions/itemActions';
+import { getItems, deleteItem } from '../actions/itemActions';
 import PropTypes from 'prop-types';
 
 class ShoppingList extends Component{
 
   componentDidMount(){
-    this.prop.getItems();
+    this.props.getItems();
   }
 
+  onDeleteClick = () => {
+  this.props.deleteItem(id);
+  }
+  
   render(){
     const { items } = this.props.item;
     return(
       <Container>
-      <Button
-          color="dark"
-          style={{marginBottom: '2rem'}}
-          onClick={() => {
-            const name = prompt('Enter Item');
-          if(name){
-            this.setState(state => ({
-              items: [...state.items, { id:uuid(), name }]
-          }));
-          }
-          }}       
-          >Add Item
-      </Button> 
+     
           <ListGroup>
         <TransitionGroup className="shopping-list">
-          {items.map(({ _id, name }) => (
-            <CSSTransition key={_id} timeout={500} classNames="fade">
+          {items.map(({ id, name }) => (
+            <CSSTransition key={id} timeout={500} classNames="fade">
               <ListGroupItem>
 
                   <Button
                     className="remove-btn"
                     color="danger"
                     size="sm"
-                    onClick={() => {
-                      this.setState(state => ({
-                        items: state.items.filter(item => item.id !== id)
-
-
-                      }));
-                    }}
+                    onClick={ this.onDeleteClick.bind(this,id)}
                   >
                     &times;
                   </Button>
@@ -73,4 +57,4 @@ item: state.item
 
 });
 
-export default connect(mapStateToProps, { getItems })(ShoppingList);
+export default connect(mapStateToProps, { getItems, deleteItem })(ShoppingList);
