@@ -3,18 +3,18 @@ import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import uuid from "uuid"; 
 // TODO uuid is not working so need to update it later on
+import { connect } from 'react-redux';
+import { getItems } from '../actions/itemActions';
+import PropTypes from 'prop-types';
 
 class ShoppingList extends Component{
-  state = {
-    items: [  
-      { id: uuid(), name:'Eggs'},
-      { id: uuid(), name:'Milk'},
-      { id: uuid(), name:'Steak'},
-      { id: uuid(), name:'Water'}
-    ]
-    }
-  return(){
-    const { items } = this.state;
+
+  componentDidMount(){
+    this.prop.getItems();
+  }
+
+  render(){
+    const { items } = this.props.item;
     return(
       <Container>
       <Button
@@ -62,4 +62,15 @@ class ShoppingList extends Component{
   }
 }
 
-export default ShoppingList;
+ShoppingList.PropTypes = {
+ getItems: PropTypes.func.isRequired,
+ item: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state)=>  ({
+//it's written item because that's the name we gave in root reducers i.e reducers/index.js
+item: state.item
+
+});
+
+export default connect(mapStateToProps, { getItems })(ShoppingList);
