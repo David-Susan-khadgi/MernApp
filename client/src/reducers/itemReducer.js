@@ -1,7 +1,5 @@
-import uuid from "uuid"; 
-// TODO uuid is not working so need to update it later on
 
-import { GET_ITEMS, ADD_ITEMS, DELETE_ITEM, ITEMS_LOADING } from '../actions/types';
+import { GET_ITEMS, ADD_ITEMS, DELETE_ITEMS, ITEMS_LOADING } from '../actions/types';
 
 const initialState = {
   items: [],

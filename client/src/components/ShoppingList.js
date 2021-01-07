@@ -3,7 +3,7 @@ import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { connect } from 'react-redux';
 import { getItems, deleteItem } from '../actions/itemActions';
-import PropTypes from 'prop-types';
+import propTypes from 'prop-types'; // P to small p
 
 class ShoppingList extends Component{
 
@@ -11,16 +11,15 @@ class ShoppingList extends Component{
     this.props.getItems();
   }
 
-  onDeleteClick = () => {
+  onDeleteClick = (id) => {
   this.props.deleteItem(id);
   }
   
   render(){
     const { items } = this.props.item;
     return(
-      <Container>
-     
-          <ListGroup>
+      <Container>  
+        <ListGroup>
         <TransitionGroup className="shopping-list">
           {items.map(({_id, name }) => (
             <CSSTransition key={_id} timeout={500} classNames="fade">
@@ -46,9 +45,9 @@ class ShoppingList extends Component{
   }
 }
 
-ShoppingList.PropTypes = {
- getItems: PropTypes.func.isRequired,
- item: PropTypes.object.isRequired
+ShoppingList.propTypes = {// P to small p
+ getItems: propTypes.func.isRequired,// P to small p
+ item: propTypes.object.isRequired// P to small p
 }
 
 const mapStateToProps = (state)=>  ({
